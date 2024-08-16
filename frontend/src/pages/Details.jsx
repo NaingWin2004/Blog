@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData,redirect } from "react-router-dom";
 
 import PostDetails from "../components/PostDetails.jsx";
 const Details = () => {
@@ -19,4 +19,14 @@ export const loader = async ({ request, params }) => {
         const data = await res.json();
         return data.post;
     }
+};
+
+export const action = async ({ request, params }) => {
+    const res = await fetch(`http://localhost:8080/posts/${params.id}`, {
+        method: "DELETE"
+    });
+    if (!res.ok) {
+        throw new Error("");
+    }
+    return redirect("/")
 };

@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useSubmit } from "react-router-dom";
 
 const PostDetails = ({ post }) => {
     const { id, image, title, date, description } = post;
+    const submit = useSubmit();
+    const postDelete = () => {
+        const confirmStatus = window.confirm(
+            "Are you sure what to delete this post?"
+        );
+        if (confirmStatus) {
+            submit(null);
+        }
+    };
     return (
         <div className="px-2 py-1 flex flex-col max-w-2xl items-center">
             <Link to="/" className="self-end cursor-pointer">
@@ -45,12 +54,17 @@ const PostDetails = ({ post }) => {
                 "
             />
             <p className="md:text-center">{description}</p>
-            <div className="flex mr-auto gap-5 my-5">
-                <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                    Edit
-                </button>
-                <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                    Deleted
+            <div className="flex ml-auto gap-5 my-5">
+                <Link to={"/edit-post/:id"}>
+                    <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
+                        Edit
+                    </button>
+                </Link>
+                <button
+                    className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95"
+                    onClick={postDelete}
+                >
+                    Delete
                 </button>
             </div>
         </div>
