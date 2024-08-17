@@ -55,7 +55,7 @@ const PostDetails = ({ post }) => {
             />
             <p className="md:text-center">{description}</p>
             <div className="flex ml-auto gap-5 my-5">
-                <Link to={"/edit-post/:id"}>
+                <Link to={`/edit-post/${id}`}>
                     <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
                         Edit
                     </button>

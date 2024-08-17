@@ -4,7 +4,7 @@ import { redirect } from "react-router-dom";
 const Create = () => {
     return (
         <div className="mx-5">
-            <PostFrom />
+            <PostFrom header={"Create your post now"} btnText={"Post"} />
         </div>
     );
 };
@@ -27,6 +27,9 @@ export const action = async ({ request, params }) => {
         },
         body: JSON.stringify(postData)
     });
+    if (res.status === 422) {
+        return res;
+    }
     if (!res.ok) {
         //code
     }

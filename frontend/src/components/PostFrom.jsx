@@ -1,6 +1,7 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useActionData } from "react-router-dom";
 
-const PostFrom = () => {
+const PostFrom = ({ header,btnText }) => {
+    const data = useActionData();
     return (
         <Form
             method="post"
@@ -22,7 +23,15 @@ const PostFrom = () => {
                     />
                 </svg>
             </Link>
-            <h1 className="font-bold">Create your post now</h1>
+            <h1 className="font-bold">{header}</h1>
+
+            {data && data.errors && (
+                <ul className="text-red-600 text-center font-bold">
+                    {Object.values(data.errors).map(err => (
+                        <li key={err}>{err}</li>
+                    ))}
+                </ul>
+            )}
             <div className="flex flex-col ">
                 <label htmlFor="form-title">Title</label>
                 <input
@@ -62,7 +71,7 @@ const PostFrom = () => {
                 ></textarea>
             </div>
             <button className="mr-auto bg-black text-white font-bold px-3 py-1.5 w-1/3 active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                Post
+              {btnText}
             </button>
         </Form>
     );

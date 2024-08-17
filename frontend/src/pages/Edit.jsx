@@ -1,5 +1,11 @@
+import PostFrom from "../components/PostFrom.jsx";
+
 const Edit = () => {
-    return <div><h1>Edit page</h1><p>Stil development</p></div>;
+    return (
+        <div className="mx-5">
+            <PostFrom header={"Edit your post now"} btnText={"Edit"}/>
+        </div>
+    );
 };
 
 export default Edit;

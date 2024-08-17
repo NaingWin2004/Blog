@@ -2,13 +2,18 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./layouts/Main.jsx";
 import Posts, { loader as postLoader } from "./pages/Posts.jsx";
 import Create, { action as createAction } from "./pages/Create.jsx";
-import Details, { action as deleteAction,loader as postDetailsLoader } from "./pages/Details.jsx";
+import Details, {
+    action as deleteAction,
+    loader as postDetailsLoader
+} from "./pages/Details.jsx";
 import Edit from "./pages/Edit.jsx";
+import Errors from "./pages/Errors.jsx";
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
             element: <Main />,
+            errorElement: <Errors />,
             children: [
                 { index: true, element: <Posts />, loader: postLoader },
                 {
@@ -20,7 +25,7 @@ function App() {
                     path: "/post-details/:id",
                     element: <Details />,
                     loader: postDetailsLoader,
-                    action:deleteAction
+                    action: deleteAction
                 },
                 {
                     path: "/edit-post/:id",
