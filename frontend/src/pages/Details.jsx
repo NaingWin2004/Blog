@@ -1,8 +1,8 @@
-import { useLoaderData,redirect } from "react-router-dom";
+import { useRouteLoaderData,redirect } from "react-router-dom";
 
 import PostDetails from "../components/PostDetails.jsx";
 const Details = () => {
-    const post = useLoaderData();
+    const post = useRouteLoaderData("post-detail");
     return (
         <div className="grid justify-center w-full">
             <PostDetails post={post} />

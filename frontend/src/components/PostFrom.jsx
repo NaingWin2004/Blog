@@ -1,6 +1,6 @@
 import { Form, Link, useActionData } from "react-router-dom";
 
-const PostFrom = ({ header,btnText }) => {
+const PostFrom = ({ header, btnText, oldPost }) => {
     const data = useActionData();
     return (
         <Form
@@ -39,6 +39,7 @@ const PostFrom = ({ header,btnText }) => {
                     id="form-title"
                     name="title"
                     className="border border-black rounded outline-none px-2 focus:ring ring-gray-200"
+                    defaultValue={oldPost ? oldPost.title : ""}
                 />
             </div>
             <div className="flex flex-col ">
@@ -49,6 +50,7 @@ const PostFrom = ({ header,btnText }) => {
                     name="image"
                     placeholder="https://www.example.com"
                     className="border border-black rounded outline-none px-2 focus:ring ring-gray-200"
+                    defaultValue={oldPost ? oldPost.image : ""}
                 />
             </div>
             <div className="flex flex-col ">
@@ -58,6 +60,7 @@ const PostFrom = ({ header,btnText }) => {
                     id="form-date"
                     name="date"
                     className="border border-black rounded outline-none px-2 focus:ring ring-gray-200 bg-white"
+                    defaultValue={oldPost ? oldPost.date : ""}
                 />
             </div>
             <div className="flex flex-col ">
@@ -68,10 +71,11 @@ const PostFrom = ({ header,btnText }) => {
                     id="form-description"
                     name="description"
                     className="border border-black rounded outline-none px-2 focus:ring ring-gray-200"
+                    defaultValue={oldPost ? oldPost.description : ""}
                 ></textarea>
             </div>
             <button className="mr-auto bg-black text-white font-bold px-3 py-1.5 w-1/3 active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-              {btnText}
+                {btnText}
             </button>
         </Form>
     );

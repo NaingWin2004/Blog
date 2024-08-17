@@ -4,7 +4,7 @@ const PostItem = ({ post }) => {
     const { id, image, title, date } = post;
     return (
         <div className="mx-1 px-1 my-2 md:mx-3 shadow hover:shadow-xl">
-            <Link to={`/post-details/${id}`}>
+            <Link to={`${id}`}>
                 <img
                     src={image}
                     alt={title}
@@ -12,7 +12,7 @@ const PostItem = ({ post }) => {
                 "
                 />
             </Link>
-            <Link to={`/post-details/${id}`}>
+            <Link to={`${id}`}>
                 <p className="text-xl font-bold cursor-pointer">{title}</p>
             </Link>
             <p className="flex items-center py-2">

@@ -22,14 +22,20 @@ function App() {
                     action: createAction
                 },
                 {
-                    path: "/post-details/:id",
-                    element: <Details />,
+                    path: ":id",
+                    id: "post-detail",
                     loader: postDetailsLoader,
-                    action: deleteAction
-                },
-                {
-                    path: "/edit-post/:id",
-                    element: <Edit />
+                    children: [
+                        {
+                            index: true,
+                            element: <Details />,
+                            action: deleteAction
+                        },
+                        {
+                            path: "edit-post",
+                            element: <Edit />
+                        }
+                    ]
                 }
             ]
         }
