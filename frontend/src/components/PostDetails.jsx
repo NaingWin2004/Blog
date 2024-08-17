@@ -8,7 +8,7 @@ const PostDetails = ({ post }) => {
             "Are you sure what to delete this post?"
         );
         if (confirmStatus) {
-            submit(null);
+            submit(null,{method:"delete"});
         }
     };
     return (

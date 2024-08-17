@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./layouts/Main.jsx";
 import Posts, { loader as postLoader } from "./pages/Posts.jsx";
-import Create, { action as createAction } from "./pages/Create.jsx";
+import Create from "./pages/Create.jsx";
 import Details, {
     action as deleteAction,
     loader as postDetailsLoader
 } from "./pages/Details.jsx";
 import Edit from "./pages/Edit.jsx";
 import Errors from "./pages/Errors.jsx";
+import { action as postAction } from "./components/PostFrom.jsx";
 function App() {
     const router = createBrowserRouter([
         {
@@ -19,7 +20,7 @@ function App() {
                 {
                     path: "/create-post",
                     element: <Create />,
-                    action: createAction
+                    action: postAction
                 },
                 {
                     path: ":id",
@@ -33,7 +34,8 @@ function App() {
                         },
                         {
                             path: "edit-post",
-                            element: <Edit />
+                            element: <Edit />,
+                            action: postAction
                         }
                     ]
                 }

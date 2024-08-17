@@ -1,10 +1,11 @@
 import { Form, Link, useActionData } from "react-router-dom";
-
-const PostFrom = ({ header, btnText, oldPost }) => {
+import { v4 as uuidv4 } from "uuid";
+import { redirect } from "react-router-dom";
+const PostFrom = ({ header, btnText, oldPost, method }) => {
     const data = useActionData();
     return (
         <Form
-            method="post"
+            method={method}
             className="px-3 py-2 grid gap-3 shadow mx-auto max-w-2xl"
         >
             <Link to="/" className="ml-auto cursor-pointer">
@@ -82,3 +83,33 @@ const PostFrom = ({ header, btnText, oldPost }) => {
 };
 
 export default PostFrom;
+export const action = async ({ request, params }) => {
+    const data = await request.formData();
+    const method = request.method;
+    const postData = {
+        id: uuidv4(),
+        title: data.get("title"),
+        image: data.get("image"),
+        date: data.get("date"),
+        description: data.get("description")
+    };
+    let url = "http://localhost:8080/posts";
+
+    if (method === "PATCH") {
+        url = `http://localhost:8080/posts/${params.id}`;
+    }
+    const res = await fetch(url, {
+        method,
+        headers: {
+            "CONTENT-TYPE": "application/json"
+        },
+        body: JSON.stringify(postData)
+    });
+    if (res.status === 422) {
+        return res;
+    }
+    if (!res.ok) {
+        //code
+    }
+    return redirect("/");
+};
