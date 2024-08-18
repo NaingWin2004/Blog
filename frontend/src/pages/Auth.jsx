@@ -10,10 +10,11 @@ export const action = async ({ request }) => {
     const searchParams = new URL(request.url).searchParams;
     const mode = searchParams.get("mode");
 
-    
     if (mode !== "login" && mode !== "signup" && mode !== "answer") {
-    throw new Error("Invalid mode. Please use 'login', 'signup' or 'answer'");
-}
+        throw new Error(
+            "Invalid mode. Please use 'login', 'signup' or 'answer'"
+        );
+    }
 
     const authData = {
         email: data.get("email"),
@@ -23,18 +24,22 @@ export const action = async ({ request }) => {
     const res = await fetch(`http://localhost:8080/${mode}`, {
         method: "POST",
         headers: {
-            "CONTENT-TYPE": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(authData)
     });
-    if (!res.ok) {
-        throw new Error("");
-    }
+
     if (res.status === 422 || res.status === 401) {
-        throw new Error("");
+        const resData = await res.json()
+        return resData;
     }
+
+    if (!res.ok) {
+        throw new Error("Something went wrong!");
+    }
+
     const resData = await res.json();
-    const token = res.token;
+    const token = resData.token;
     localStorage.setItem("token", token);
 
     return redirect("/");

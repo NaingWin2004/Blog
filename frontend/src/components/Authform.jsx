@@ -1,6 +1,7 @@
-import { Link, Form, useSearchParams } from "react-router-dom";
+import { Link, Form, useSearchParams, useActionData } from "react-router-dom";
 
 const Authform = () => {
+    const data = useActionData();
     const [searchParams] = useSearchParams();
     const isLogin = searchParams.get("mode") === "login";
     return (
@@ -12,6 +13,15 @@ const Authform = () => {
                 <h1 className="font-bold text-xl">
                     {isLogin ? "Login your account" : "Create new account"}
                 </h1>
+                {data && data.errors && (
+                    <ul className="text-red-600">
+                        {Object.values(data.errors).map(err => (
+                            <li key={err}>{err}</li>
+                        ))}
+                    </ul>
+                )}
+                {data && data.message && <p className="text-red-600">{data.message}</p>}
+
                 <div className="flex flex-col ">
                     <label htmlFor="email">Email</label>
                     <input
