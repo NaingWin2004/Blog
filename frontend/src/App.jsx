@@ -9,6 +9,7 @@ import Details, {
 import Edit from "./pages/Edit.jsx";
 import Errors from "./pages/Errors.jsx";
 import { action as postAction } from "./components/PostFrom.jsx";
+import Auth ,{ action as authAction } from "./pages/Auth.jsx";
 function App() {
     const router = createBrowserRouter([
         {
@@ -22,6 +23,7 @@ function App() {
                     element: <Create />,
                     action: postAction
                 },
+                { path: "/auth", element: <Auth />,action:authAction },
                 {
                     path: ":id",
                     id: "post-detail",

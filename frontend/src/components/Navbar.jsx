@@ -27,6 +27,16 @@ const Navbar = () => {
                         CreatePost
                     </NavLink>
                 </li>
+                <li className="cursor-pointer">
+                    <NavLink
+                        to="/auth?mode=login"
+                        className={({ isActive }) =>
+                            isActive ? "bg-black text-white px-3 py-1.5" : ""
+                        }
+                    >
+                        Login
+                    </NavLink>
+                </li>
             </ul>
         </nav>
     );
