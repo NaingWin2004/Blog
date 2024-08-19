@@ -1,7 +1,9 @@
-import { Link, Form, useSearchParams, useActionData } from "react-router-dom";
+import { Link, Form, useSearchParams, useActionData,useNavigation } from "react-router-dom";
 
 const Authform = () => {
     const data = useActionData();
+    const navigation = useNavigation()
+    const isSubmitting = navigation.state === "submitting"
     const [searchParams] = useSearchParams();
     const isLogin = searchParams.get("mode") === "login";
     return (
@@ -41,7 +43,7 @@ const Authform = () => {
                     />
                 </div>
                 <button className="mr-auto bg-black text-white font-bold px-3 py-1.5 w-1/3 active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                    {isLogin ? "Login" : "Register"}
+                    {isSubmitting?"Submitting":isLogin ? "Login" : "Register"}
                 </button>
                 <div className="flex gap-2">
                     {isLogin ? (

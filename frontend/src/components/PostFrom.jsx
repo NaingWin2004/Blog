@@ -1,8 +1,10 @@
-import { Form, Link, useActionData } from "react-router-dom";
+import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { redirect } from "react-router-dom";
 const PostFrom = ({ header, btnText, oldPost, method }) => {
     const data = useActionData();
+    const navigation = useNavigation();
+    const isSubmitting = navigation.state === "submitting";
     return (
         <Form
             method={method}
@@ -32,6 +34,9 @@ const PostFrom = ({ header, btnText, oldPost, method }) => {
                         <li key={err}>{err}</li>
                     ))}
                 </ul>
+            )}
+            {data && data.message && (
+                <p className="text-red-600">{data.message}</p>
             )}
             <div className="flex flex-col ">
                 <label htmlFor="form-title">Title</label>
@@ -76,7 +81,7 @@ const PostFrom = ({ header, btnText, oldPost, method }) => {
                 ></textarea>
             </div>
             <button className="mr-auto bg-black text-white font-bold px-3 py-1.5 w-1/3 active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                {btnText}
+                {isSubmitting?"Submitting":btnText}
             </button>
         </Form>
     );
@@ -101,15 +106,17 @@ export const action = async ({ request, params }) => {
     const res = await fetch(url, {
         method,
         headers: {
-            "CONTENT-TYPE": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(postData)
     });
-    if (res.status === 422) {
-        return res;
+    if (res.status === 422 || res.status === 401) {
+        const resData = await res.json();
+        return resData;
     }
+
     if (!res.ok) {
-        //code
+        throw new Error("Something went wrong!");
     }
     return redirect("/");
 };
