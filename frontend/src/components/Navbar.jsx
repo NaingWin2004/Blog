@@ -1,6 +1,7 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useRouteLoaderData } from "react-router-dom";
 
 const Navbar = () => {
+    const isToken = useRouteLoaderData("root");
     return (
         <nav className="flex justify-between px-3 py-2 items-center">
             <Link to="/">
@@ -17,26 +18,50 @@ const Navbar = () => {
                         Post
                     </NavLink>
                 </li>
-                <li className="cursor-pointer">
-                    <NavLink
-                        to="/create-post"
-                        className={({ isActive }) =>
-                            isActive ? "bg-black text-white px-3 py-1.5" : ""
-                        }
-                    >
-                        CreatePost
-                    </NavLink>
-                </li>
-                <li className="cursor-pointer">
-                    <NavLink
-                        to="/auth?mode=login"
-                        className={({ isActive }) =>
-                            isActive ? "bg-black text-white px-3 py-1.5" : ""
-                        }
-                    >
-                        Login
-                    </NavLink>
-                </li>
+                {isToken && (
+                    <li className="cursor-pointer">
+                        <NavLink
+                            to="/create-post"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "bg-black text-white px-3 py-1.5"
+                                    : ""
+                            }
+                        >
+                            CreatePost
+                        </NavLink>
+                    </li>
+                )}
+
+                {!isToken && (
+                    <li className="cursor-pointer">
+                        <NavLink
+                            to="/auth?mode=login"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "bg-black text-white px-3 py-1.5"
+                                    : ""
+                            }
+                        >
+                            Login
+                        </NavLink>
+                    </li>
+                )}
+
+                {isToken && (
+                    <li className="cursor-pointer">
+                        <NavLink
+                            to="/logout"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "bg-black text-white px-3 py-1.5"
+                                    : ""
+                            }
+                        >
+                            Logout
+                        </NavLink>
+                    </li>
+                )}
             </ul>
         </nav>
     );

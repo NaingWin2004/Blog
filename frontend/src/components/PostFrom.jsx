@@ -1,6 +1,7 @@
 import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { redirect } from "react-router-dom";
+import { auth } from "../util/auth.js";
 const PostFrom = ({ header, btnText, oldPost, method }) => {
     const data = useActionData();
     const navigation = useNavigation();
@@ -80,8 +81,11 @@ const PostFrom = ({ header, btnText, oldPost, method }) => {
                     defaultValue={oldPost ? oldPost.description : ""}
                 ></textarea>
             </div>
-            <button className="mr-auto bg-black text-white font-bold px-3 py-1.5 w-1/3 active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                {isSubmitting?"Submitting":btnText}
+            <button
+                className="mr-auto bg-black text-white font-bold px-3 py-1.5 w-1/3 active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95"
+                disable={isSubmitting}
+            >
+                {isSubmitting ? "Submitting" : btnText}
             </button>
         </Form>
     );
@@ -91,6 +95,7 @@ export default PostFrom;
 export const action = async ({ request, params }) => {
     const data = await request.formData();
     const method = request.method;
+    const token = auth();
     const postData = {
         id: uuidv4(),
         title: data.get("title"),
@@ -106,7 +111,8 @@ export const action = async ({ request, params }) => {
     const res = await fetch(url, {
         method,
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
         },
         body: JSON.stringify(postData)
     });

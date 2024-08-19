@@ -9,13 +9,17 @@ import Details, {
 import Edit from "./pages/Edit.jsx";
 import Errors from "./pages/Errors.jsx";
 import { action as postAction } from "./components/PostFrom.jsx";
-import Auth ,{ action as authAction } from "./pages/Auth.jsx";
+import Auth, { action as authAction } from "./pages/Auth.jsx";
+import { loader as logoutLoader } from "./components/Logout.js";
+import { tokenLoader } from "./util/auth.js";
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
             element: <Main />,
             errorElement: <Errors />,
+            id:"root",
+            loader: tokenLoader,
             children: [
                 { index: true, element: <Posts />, loader: postLoader },
                 {
@@ -23,7 +27,8 @@ function App() {
                     element: <Create />,
                     action: postAction
                 },
-                { path: "/auth", element: <Auth />,action:authAction },
+                { path: "/auth", element: <Auth />, action: authAction },
+                { path: "/logout", loader: logoutLoader },
                 {
                     path: ":id",
                     id: "post-detail",

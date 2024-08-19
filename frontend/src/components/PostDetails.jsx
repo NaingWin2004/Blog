@@ -1,8 +1,9 @@
-import { Link, useSubmit } from "react-router-dom";
+import { Link, useSubmit,useRouteLoaderData } from "react-router-dom";
 
 const PostDetails = ({ post }) => {
     const { id, image, title, date, description } = post;
     const submit = useSubmit();
+    const isToken = useRouteLoaderData("root")
     const postDelete = () => {
         const confirmStatus = window.confirm(
             "Are you sure what to delete this post?"
@@ -54,7 +55,7 @@ const PostDetails = ({ post }) => {
                 "
             />
             <p className="md:text-center">{description}</p>
-            <div className="flex ml-auto gap-5 my-5">
+           {isToken &&  <div className="flex ml-auto gap-5 my-5">
                 <Link to={`edit-post`}>
                     <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
                         Edit
@@ -66,7 +67,7 @@ const PostDetails = ({ post }) => {
                 >
                     Delete
                 </button>
-            </div>
+            </div>}
         </div>
     );
 };
