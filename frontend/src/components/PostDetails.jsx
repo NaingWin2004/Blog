@@ -1,15 +1,15 @@
-import { Link, useSubmit,useRouteLoaderData } from "react-router-dom";
+import { Link, useSubmit, useRouteLoaderData } from "react-router-dom";
 
 const PostDetails = ({ post }) => {
     const { id, image, title, date, description } = post;
     const submit = useSubmit();
-    const isToken = useRouteLoaderData("root")
+    const isToken = useRouteLoaderData("root");
     const postDelete = () => {
         const confirmStatus = window.confirm(
             "Are you sure what to delete this post?"
         );
         if (confirmStatus) {
-            submit(null,{method:"delete"});
+            submit(null, { method: "delete" });
         }
     };
     return (
@@ -51,23 +51,25 @@ const PostDetails = ({ post }) => {
             <img
                 src={image}
                 alt={title}
-                className="max-w-screen-sm w-full  object-cover py-2
+                className="max-w-screen-xl w-full  object-cover py-2
                 "
             />
             <p className="md:text-center">{description}</p>
-           {isToken &&  <div className="flex ml-auto gap-5 my-5">
-                <Link to={`edit-post`}>
-                    <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
-                        Edit
+            {isToken && (
+                <div className="flex ml-auto gap-5 my-5">
+                    <Link to={`edit-post`}>
+                        <button className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95">
+                            Edit
+                        </button>
+                    </Link>
+                    <button
+                        className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95"
+                        onClick={postDelete}
+                    >
+                        Delete
                     </button>
-                </Link>
-                <button
-                    className="mr-auto bg-black text-white font-bold px-3 py-1.5  active:bg-white active:text-black active:outline transition-all duration-75 active:scale-95"
-                    onClick={postDelete}
-                >
-                    Delete
-                </button>
-            </div>}
+                </div>
+            )}
         </div>
     );
 };

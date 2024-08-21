@@ -43,6 +43,8 @@ export const action = async ({ request }) => {
     const resData = await res.json();
     const token = resData.token;
     localStorage.setItem("token", token);
-
+    const expDate = new Date();
+  expDate.setHours(expDate.getHours() + 1);
+  localStorage.setItem("exp", expDate.toISOString());
     return redirect("/");
 };

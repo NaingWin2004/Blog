@@ -8,7 +8,7 @@ const PostItem = ({ post }) => {
                 <img
                     src={image}
                     alt={title}
-                    className="max-w-full w-full max-h-56 object-cover cursor-pointer
+                    className="max-w-full w-full max-h-56 lg:max-h-[500px] object-cover cursor-pointer
                 "
                 />
             </Link>

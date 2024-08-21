@@ -11,21 +11,22 @@ import Errors from "./pages/Errors.jsx";
 import { action as postAction } from "./components/PostFrom.jsx";
 import Auth, { action as authAction } from "./pages/Auth.jsx";
 import { loader as logoutLoader } from "./components/Logout.js";
-import { tokenLoader } from "./util/auth.js";
+import { tokenLoader, checkToken } from "./util/auth.js";
 function App() {
     const router = createBrowserRouter([
         {
             path: "/",
             element: <Main />,
             errorElement: <Errors />,
-            id:"root",
+            id: "root",
             loader: tokenLoader,
             children: [
                 { index: true, element: <Posts />, loader: postLoader },
                 {
                     path: "/create-post",
                     element: <Create />,
-                    action: postAction
+                    action: postAction,
+                    loader: checkToken
                 },
                 { path: "/auth", element: <Auth />, action: authAction },
                 { path: "/logout", loader: logoutLoader },
@@ -42,7 +43,8 @@ function App() {
                         {
                             path: "edit-post",
                             element: <Edit />,
-                            action: postAction
+                            action: postAction,
+                            loader: checkToken
                         }
                     ]
                 }

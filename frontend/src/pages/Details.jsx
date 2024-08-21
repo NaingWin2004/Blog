@@ -13,7 +13,7 @@ const Details = () => {
 export default Details;
 
 export const loader = async ({ request, params }) => {
-    const token = auth();
+    
     const res = await fetch(`http://localhost:8080/posts/${params.id}`);
     if (!res.ok) {
     } else {
@@ -23,6 +23,7 @@ export const loader = async ({ request, params }) => {
 };
 
 export const action = async ({ request, params }) => {
+    const token = auth();
     const res = await fetch(`http://localhost:8080/posts/${params.id}`, {
         method: "DELETE",
         headers: {
