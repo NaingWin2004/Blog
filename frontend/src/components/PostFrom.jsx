@@ -2,6 +2,7 @@ import { Form, Link, useActionData, useNavigation } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { redirect } from "react-router-dom";
 import { auth } from "../util/auth.js";
+
 const PostFrom = ({ header, btnText, oldPost, method }) => {
     const data = useActionData();
     const navigation = useNavigation();
@@ -103,10 +104,10 @@ export const action = async ({ request, params }) => {
         date: data.get("date"),
         description: data.get("description")
     };
-    let url = "http://localhost:8080/posts";
+    let url = `${import.meta.env.VITE_API_URL}/posts`;
 
     if (method === "PATCH") {
-        url = `http://localhost:8080/posts/${params.id}`;
+        url = `${import.meta.env.VITE_API_URL}/posts/${params.id}`;
     }
     const res = await fetch(url, {
         method,

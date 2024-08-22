@@ -1,6 +1,6 @@
 import Authform from "../components/Authform.jsx";
-
 import { redirect } from "react-router-dom";
+
 const Auth = () => {
     return <Authform />;
 };
@@ -10,7 +10,7 @@ export const action = async ({ request }) => {
     const data = await request.formData();
     const searchParams = new URL(request.url).searchParams;
     const mode = searchParams.get("mode");
-    
+
     if (mode !== "login" && mode !== "signup" && mode !== "answer") {
         throw new Error(
             "Invalid mode. Please use 'login', 'signup' or 'answer'"
@@ -22,11 +22,10 @@ export const action = async ({ request }) => {
         password: data.get("password")
     };
 
-    const res = await fetch(`http://localhost:8080/${mode}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/${mode}`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
-
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(authData)
     });
@@ -44,7 +43,7 @@ export const action = async ({ request }) => {
     const token = resData.token;
     localStorage.setItem("token", token);
     const expDate = new Date();
-  expDate.setHours(expDate.getHours() + 1);
-  localStorage.setItem("exp", expDate.toISOString());
+    expDate.setHours(expDate.getHours() + 1);
+    localStorage.setItem("exp", expDate.toISOString());
     return redirect("/");
 };

@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import PostItem from "../components/PostItem.jsx";
+
 const Posts = () => {
     const posts = useLoaderData();
     return (
@@ -13,7 +14,7 @@ const Posts = () => {
 export default Posts;
 
 export const loader = async () => {
-    const res = await fetch("http://localhost:8080/posts");
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/posts`);
     if (!res.ok) {
     } else {
         const data = await res.json();
